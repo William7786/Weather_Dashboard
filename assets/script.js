@@ -1,4 +1,5 @@
 var cityL =$("#cityL");
+var temp = $("#temp")
 var city1 = [];
 var api = "https://api.openweathermap.org/data/2.5/weather?q=";
 var key = "&appid=c9d4fc2e822514ab1be527c50cbfeeb2";
@@ -7,19 +8,24 @@ var key = "&appid=c9d4fc2e822514ab1be527c50cbfeeb2";
  
  $("#btn").on("click", function (e) {
  e.preventDefault();
-  var city = $("#input").val();
+  
+  var city = $("#input").val().trim();
+  
   city1.push(city)
-  fetch(api+input.value+key)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)})
   stored()
   saveCity()
-   city.innerHTML = `${cityL}`
+ city.innerHTML = `${cityL}`
   temp.innerHTML = `${temp}`
   wind.innerHTML = `${wind}`
   humid.innerHTML = `${humid}`
   date.innerHTML = `${date}`
+
+  fetch(api+input.value+key)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)})
+ 
+
  });
  
 
@@ -66,12 +72,21 @@ for (var i = 0; i < city1.length; i++) {
   console.log(l)
   console.log(C)
   cityL.prepend(l)
-}}
+}
+  if (!C){
+    return
+  }
+  else{
+    Weather()
+  };
+
+}
 
 function Weather(city) {
 
-    var queryURL = api+city+ "&appid=" + key;
+    var queryURL = api + city + key;
     $("#tweather").empty();
+    console.log("#tweather")
     $.ajax({
       url: queryURL,
       method: "GET", 
@@ -82,17 +97,25 @@ function Weather(city) {
       var cityTemp = $("<p>").text("Tempeture: " + temp + "°F"); $("#dayW").append(cityTemp);
       var cityH = $("<p>").text("Humidity: " + response.main.humidity + "%"); $("#dayW").append(cityH);
       console.log(response + "logged")
+    $("card .stored").val(localStorage.getItem("day"));
+    
+    
+    //
+
+    }); 
+    var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + key;
+    $.ajax({
+      url: queryURL2,
+      method: "GET"
+    }).then(function(response2){
+      $("#card").empty()
+    console.log(response2);
 
 
-    // $("card .stored").val(localStorage.getItem("day"));
-    // var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q="
-    // $.ajax({
-    //   url: queryURL2,
-    //   method: "GET"
-    // }).then(function(response){
-    // console.log("logged")
+    for(car i=0, j=0 j<=5; i=i+6){
+      var date = response2.list[i].dt;
       
-    // })
-
-    });
+    }
+      
+    })
  }
