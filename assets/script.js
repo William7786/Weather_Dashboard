@@ -1,23 +1,28 @@
 var cityL =$("#cityL");
-var city = document.getElementById("city");
+var city1 = [];
 var api = "https://api.openweathermap.org/data/2.5/weather?q=";
 var key = "&appid=c9d4fc2e822514ab1be527c50cbfeeb2";
 
+
  
- $("#btn").on("click", function () {
-  var city1 = $("#input").val()
-  city.push(city1)
+ $("#btn").on("click", function (e) {
+ e.preventDefault();
+  var city = $("#input").val();
+  city1.push(city)
   fetch(api+input.value+key)
     .then(response => response.json())
     .then(data => {
         console.log(data)})
   stored()
-  FormatDay()
   saveCity()
-  Weather()
+   city.innerHTML = `${cityL}`
+  temp.innerHTML = `${temp}`
+  wind.innerHTML = `${wind}`
+  humid.innerHTML = `${humid}`
+  date.innerHTML = `${date}`
  });
  
-   
+
  
   
   
@@ -37,25 +42,27 @@ var key = "&appid=c9d4fc2e822514ab1be527c50cbfeeb2";
 
 stored()
 function stored(){
-var storedCity = JSON.parse(localStorage.getItem("city"))
+var storedCity = JSON.parse(localStorage.getItem("city1"))
 if (storedCity !== null){
-city = storedCity;
+city1 = storedCity;
 }
 Cities();
+
 }
 
 function saveCity(){
-localStorage.setItem("city", JSON.stringify(city))
-console.log("savedCity");
+localStorage.setItem("city1", JSON.stringify(city1));
+console.log(localStorage);
 }
 
 function Cities(){
 cityL.empty();
-for (var i = 0; i < city.length; i++) {
-  var C = city[i];
+for (var i = 0; i < city1.length; i++) {
+  var C = city1[i];
   var l = $("<li>").text(C);
-  l.attr("data", C);
+  l.attr("data-city", C);
   l.attr("id", "list");
+  l.attr("class", "list-group-item")
   console.log(l)
   console.log(C)
   cityL.prepend(l)
@@ -63,10 +70,7 @@ for (var i = 0; i < city.length; i++) {
 
 function Weather(city) {
 
-
- 
-
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +city+ "&appid=" + key;
+    var queryURL = api+city+ "&appid=" + key;
     $("#tweather").empty();
     $.ajax({
       url: queryURL,
@@ -74,21 +78,21 @@ function Weather(city) {
     }).then(function(response){
       cityTitle = $("<h3>").text(response.name + " "+ FormatDay());
       $("#dayW").append(cityTitle);
-      var Temp = parseInt((response.main.temp)* 9/5 -459)
-      var cityTemp = $("<p>").text("Tempeture: " + Temp + "°F"); $("#dayW").append(cityTemp);
+      var temp = parseInt((response.main.temp))
+      var cityTemp = $("<p>").text("Tempeture: " + temp + "°F"); $("#dayW").append(cityTemp);
       var cityH = $("<p>").text("Humidity: " + response.main.humidity + "%"); $("#dayW").append(cityH);
       console.log(response + "logged")
 
 
-    $("card .stored").val(localStorage.getItem("day"));
-    var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q="
-    $.ajax({
-      url: queryURL2,
-      method: "GET"
-    }).then(function(response){
-    console.log("logged")
+    // $("card .stored").val(localStorage.getItem("day"));
+    // var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q="
+    // $.ajax({
+    //   url: queryURL2,
+    //   method: "GET"
+    // }).then(function(response){
+    // console.log("logged")
       
-    })
+    // })
 
     });
  }
