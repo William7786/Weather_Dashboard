@@ -2,6 +2,7 @@ var cityL =$("#cityL");
 var temp = $("#temp")
 var city1 = [];
 var api = "https://api.openweathermap.org/data/2.5/weather?q=";
+var forecast = "https://api.openweathermap.org/data/2.5/forecast?q="
 var key = "&appid=c9d4fc2e822514ab1be527c50cbfeeb2";
 
 
@@ -103,19 +104,27 @@ function Weather(city) {
     //
 
     }); 
-    var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + key;
-    $.ajax({
-      url: queryURL2,
-      method: "GET"
-    }).then(function(response2){
-      $("#card").empty()
-    console.log(response2);
+  
+    $('#btn').on('click',function(ForecastL){
+      fetch(forecast+input.value+key)
+      .then(function(response){
+          return response.json();
+      })
+      .then(function(data){
+          console.log(data);
+          $('#card2').empty();
+          for (let i = 4; i < 40; i+=8) {
+              var cityC = document.createElement('div')
+              var cityDate = document.createElement('p') 
+              var weatherI = document.createElement('img')
+              var temp = document.createElement('p')
+              var windmph = document.createElement('p')
+              var humidity = document.createElement('p')
+              
+             
+  
+          
 
-
-    for(car i=0, j=0 j<=5; i=i+6){
-      var date = response2.list[i].dt;
       
     }
-      
-    })
- }
+ })})}
