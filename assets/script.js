@@ -99,9 +99,7 @@ function Weather(city) {
       var cityH = $("<p>").text("Humidity: " + response.main.humidity + "%"); $("#dayW").append(cityH);
       console.log(response + "logged")
     $("card .stored").val(localStorage.getItem("day"));
-    
-    
-    //
+  
 
     }); 
   
@@ -121,6 +119,30 @@ function Weather(city) {
               var windmph = document.createElement('p')
               var humidity = document.createElement('p')
               
+              cityC.classList.add('card')
+  
+              cityC.append(cityDate, weatherI, temp, windmph, humidity)
+  
+              temp.textContent = 'Temperature in F: '
+              windmph.textContent = 'Wind Speed: '
+              humidity.textContent = 'Humidity: '
+              cityDate
+  
+
+              var cityD = data.list[i].dt_txt
+              cityDate.append(cityD)
+  
+              var tempD = data.list[i].main.temp
+              temp.append(tempD)
+  
+              var windS = data.list[i].wind.speed
+              windmph.append(windS)
+  
+              var humidD = data.list[i].main.humidity
+              humidity.append(humidD)
+  
+  
+            $("#card2").append(cityC)
              
   
           
