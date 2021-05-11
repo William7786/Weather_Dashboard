@@ -22,11 +22,11 @@ $("#btn").on("click", function (e) {
   //   humid.innerHTML = `${humid}`
   //   date.innerHTML = `${date}`
 
-  fetch(api + input.value + key)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-    })
+  // fetch(api + input.value + key)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data)
+  //   })
 
 
 });
@@ -70,7 +70,7 @@ function Cities() {
     var C = city1[i];
     var l = $("<li>").text(C);
     l.attr("data-city", C);
-    l.attr("id", "list");
+    l.attr("id", "listC");
     l.attr("class", "list-group-item")
     console.log(l)
     console.log(C)
@@ -80,8 +80,10 @@ function Cities() {
     return
   }
  
+ 
 
 }
+
 
 $('#btn').on('click', function Weather(){
 
@@ -92,7 +94,7 @@ $('#btn').on('click', function Weather(){
   .then(function (data) {
     console.log(data);
     $('#card1').empty();
-    for (let i = 1; i < 40; i += 8) {
+    for (let i = 0; i < 40; i += 40) {
       var city = document.createElement('div')
       var cityDate = document.createElement('p')
       var weatherI = document.createElement('img')
@@ -110,17 +112,17 @@ $('#btn').on('click', function Weather(){
       cityDate
 
 
-      var cityD = data.list[i].dt_txt
-      cityDate.append(cityD)
+      // var cityD = data.list[i].data_txt
+      // cityDate.append(cityD)
 
-      var tempD = data.list[i].main.temp
-      temp.append(tempD)
+      // var tempD = data.list[i].main.temp
+      // temp.append(tempD)
 
-      var windS = data.list[i].wind.speed
-      windmph.append(windS)
+      // var windS = data.list[i].wind.speed
+      // windmph.append(windS)
 
-      var humidD = data.list[i].main.humidity
-      humidity.append(humidD)
+      // var humidD = data.list[i].main.humidity
+      // humidity.append(humidD)
 
 
       $("#card1").append(city)
